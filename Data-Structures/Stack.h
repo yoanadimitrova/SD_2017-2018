@@ -119,20 +119,6 @@ void Stack<T>::push(const T& newElem) // newElement is the value to which the in
         }
 }
 
-// Returns the number of elements currently stored in the stack
-template<typename T>
-size_t Stack<T>::len() const
-{
-    return this -> size;
-}
-
-// Checks if the stack is empty
-template<typename T>
-bool Stack<T>::isEmpty() const
-{
-    return this -> topElem == nullptr;
-}
-
 // Copies the stack but the elements in it are reversed
 template<typename T>
 void Stack<T>::reversedElemCopy(const Stack& stackElem)
@@ -152,6 +138,20 @@ void Stack<T>::copy(Stack const& other)
     Stack<T> reversedStack; // Empty stack to save the Stack' elements in the right order
     reversedStack.reversedElemCopy(other); // We save the 'wrong' reversed elements from other to reversedStack
     this -> reversedElemCopy(reversedStack); // This is the stack with the right order of elements
+}
+
+// Returns the number of elements currently stored in the stack
+template<typename T>
+size_t Stack<T>::len() const
+{
+    return this -> size;
+}
+
+// Checks if the stack is empty
+template<typename T>
+bool Stack<T>::isEmpty() const
+{
+    return this -> topElem == nullptr;
 }
 
 // Assigning initial values for the data-members of the object
