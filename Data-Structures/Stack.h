@@ -1,5 +1,6 @@
 #pragma once
 
+/*
 template<typename T>
 struct Element
 {
@@ -11,7 +12,7 @@ struct Element
         nextElem = _nextElem;
     }
 };
-
+*/
 
 template<typename T>
 class Stack
