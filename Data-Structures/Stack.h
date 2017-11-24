@@ -1,15 +1,13 @@
 #pragma once
 
 template<typename T>
-struct Element
+struct Node
 {
     T data;
-    Element<T>* nextElem;
-    Element(const T& other, Element<T>* _nextElem = nullptr)
-    {
-        data = other;
-        nextElem = _nextElem;
-    }
+    Node<T>* next;
+
+    Node(const T& newData, Node<T>* newNext = nullptr)
+        : data(newData), next(newNext) {}
 };
 
 template<typename T>
@@ -24,15 +22,17 @@ public:
     T pop();
     T top() const;
     void push(const T& newElem);
-    size_t len() const;
+
+    size_t lenght() const;
     bool isEmpty() const;
 
-
 private:
-    Element<T>* topElem;
+    Node<T>* topElement;
     size_t size;
-    void reversedElemCopy(const Stack& stackElem);
+
+    void ReversedCopyElem(const Stack& stackElem);
     void copy(const Stack& other);
+
     void init();
     void destroy();
 };
@@ -53,17 +53,15 @@ Stack<T>::Stack(const Stack& other)
 template<typename T>
 Stack<T>& Stack<T>::operator=(const Stack& other)
 {
-    if(this != &other)
+    if(this != other)
     {
         this -> destroy();
         this -> init();
-        this -> copy(other); 
-
+        this -> copy(other);
     }
     return *this;
 }
 
-// Destructor
 template<typename T>
 Stack<T>::~Stack()
 {
@@ -75,9 +73,10 @@ T Stack<T>::pop()
 {
     if(!isEmpty())
     {
-        Element<T>* temp = topElem;
-        T data = temp -> data;
-        topElem = topElem -> nextElem;
+        Node<T>* temp = topElement;
+        T data = topElement -> data;
+
+        topElement = topElement -> next;
         delete temp;
         this -> size--;
         return data;
@@ -91,7 +90,7 @@ T Stack<T>::top() const
 {
     if(!isEmpty())
     {
-        return topElem -> data;
+        return topElement -> data;
     }
     return nullptr;
 }
@@ -99,38 +98,20 @@ T Stack<T>::top() const
 template<typename T>
 void Stack<T>::push(const T& newElem)
 {
-        Element<T>* addElem = new Element<T>(newElem);
-        addElem -> data = newElem;
-        addElem -> nextElem = this -> topElem;
+    Node<T>* addElem = new Node<T>(newElem);
 
-        if(addElem)
-        {
-            this -> topElem = addElem;
-            this -> size++;
-        }
-}
+    addElem -> data = newElem;
+    addElem -> next = this -> topElement;
 
-template<typename T>
-void Stack<T>::reversedElemCopy(const Stack& stackElem)
-{
-    Element<T>* temp = stackElem -> topElem;
-    for(size_t i = 0; i < stackElem.len(); i++)
+    if(addElem)
     {
-        this -> push(temp -> data);
-        temp = temp -> next;
+        this -> topElement = addElem;
+        this -> size++;
     }
 }
 
 template<typename T>
-void Stack<T>::copy(Stack const& other)
-{
-    Stack<T> reversedStack;
-    reversedStack.reversedElemCopy(other); 
-    this -> reversedElemCopy(reversedStack);
-}
-
-template<typename T>
-size_t Stack<T>::len() const
+size_t Stack<T>::lenght() const
 {
     return this -> size;
 }
@@ -138,20 +119,42 @@ size_t Stack<T>::len() const
 template<typename T>
 bool Stack<T>::isEmpty() const
 {
-    return this -> topElem == nullptr;
+    return this -> topElement == nullptr;
+}
+
+template<typename T>
+void Stack<T>::ReversedCopyElem(const Stack& stackElem)
+{
+    Node<T>* temp = stackElem -> topElement;
+
+    for(size_t i = 0; i < stackElem.lenght(); i++)
+    {
+        this -> push(temp -> data);
+        temp = temp -> next;
+    }
+}
+
+template<typename T>
+void Stack<T>::copy(const Stack& other)
+{
+    Stack<T> reversedStack(other);
+    reversedStack.ReversedCopyElem(other);
+    this -> ReversedCopyElem(reversedStack);
 }
 
 template<typename T>
 void Stack<T>::init()
 {
-    this -> topElem = nullptr;
+    this -> topElement = nullptr;
     this -> size = 0;
 }
 
 template<typename T>
 void Stack<T>::destroy()
 {
-   // for(size_t i = 0; i <= this -> size; i++)
+    // for(size_t i = 0; i <= this -> size; i++)
     while(isEmpty() == false)
+    {
         this -> pop();
+    }
 }
