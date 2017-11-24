@@ -167,37 +167,40 @@ int main()
     fstream file("test.txt", ios::out);
     if(file.is_open())
     {
-        file.seekg(0, ios::end);
-        file.clear();
-        size_t len = file.tellg();
-        file.seekg (0, ios::beg);
-
-        size_t MAX_SIZE = len + 1;
-        char* chars = new char[MAX_SIZE];
-        file.getline(chars, MAX_SIZE);
-
-        char temp;
-        temp = file.peek();
-        if(temp != ';')
+        while(!file.eof())
         {
-            char read;
+            file.seekg(0, ios::end);
+            file.clear();
+            size_t len = file.tellg();
+            file.seekg (0, ios::beg);
 
-            do
+            size_t MAX_SIZE = len + 1;
+            char* chars = new char[MAX_SIZE];
+            file.getline(chars, MAX_SIZE);
+
+            char temp;
+            temp = file.peek();
+            if(temp != ';')
             {
-                file.get(read);
+                char read;
+
+                do
+                {
+                    file.get(read);
+                }
+                while(read != '\0' && !file.eof());
             }
-            while(read != '\0' && !file.eof());
-        }
 
 
-        for(size_t i = 0; i < MAX_SIZE; i++)
-        {
-            if(chars[i] != '*')
+            for(size_t i = 0; i < MAX_SIZE; i++)
             {
-                myStack.push(chars[i]);
+                if(chars[i] != '*')
+                {
+                    myStack.push(chars[i]);
+                }
+                else
+                    cout << myStack.pop();
             }
-            else
-                cout << myStack.pop();
         }
         file.close();
     }
