@@ -158,3 +158,33 @@ void Stack<T>::destroy()
         this -> pop();
     }
 }
+
+/*
+int main()
+{
+    Stack<char> myStack;
+
+    fstream file("test.txt", ios::out);
+    char c;
+    if(file.is_open())
+    {
+        // size_t len = 0;
+        file.seekg(0, ios::beg);
+        // file.clear();
+        size_t len = file.tellg();
+        file.seekg (0, ios::end);
+
+        size_t MAX_SIZE = len +1;
+        char* chars = new char[MAX_SIZE];
+        file.getline(chars, MAX_SIZE);
+
+        for(size_t i = 0; i < MAX_SIZE; i++)
+        {
+            myStack.push(c);
+        }
+        cout << myStack.pop();
+        file.close();
+    }
+    else
+        cout << "Can't open file." << endl;
+*/
