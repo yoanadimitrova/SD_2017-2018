@@ -1,6 +1,5 @@
 #pragma once
 
-/*
 template<typename T>
 struct Element
 {
@@ -12,7 +11,6 @@ struct Element
         nextElem = _nextElem;
     }
 };
-*/
 
 template<typename T>
 class Stack
@@ -31,19 +29,6 @@ public:
 
 
 private:
-    template<typename T>
-    struct Element
-    {
-    T data;
-    Element<T>* nextElem;
-    Element(const T& other, Element<T>* _nextElem = nullptr)
-    {
-        data = other;
-        nextElem = _nextElem;
-    }
-    };
-
-    
     Element<T>* topElem;
     size_t size;
     void reversedElemCopy(const Stack& stackElem);
