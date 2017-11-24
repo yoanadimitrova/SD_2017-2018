@@ -166,6 +166,7 @@ void Stack<T>::init()
 template<typename T>
 void Stack<T>::destroy()
 {
-    for(size_t i = 0; i <= this -> size; i++)
+   // for(size_t i = 0; i <= this -> size; i++)
+    while(isEmpty() == false)
         this -> pop();
 }
